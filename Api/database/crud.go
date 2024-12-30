@@ -7,6 +7,12 @@ import (
 	"github.com/jackc/pgx/v5"
 )
 
+type Thought struct {
+	Thought string `json:"thought"`
+	ThoughtType string `json:"thoughtType"`
+	TimePosted time.Time `json:"timePosted"`
+}
+
 func (d *DB) InsertRow (thought string, thoughtType string) error {
 	query := `INSERT INTO thoughts (thought, thoughttype, timeposted) VALUES (@thought, @thoughttype, @time)`
 	timestamp := time.Now()
@@ -23,12 +29,6 @@ func (d *DB) InsertRow (thought string, thoughtType string) error {
 	}
 	
 	return nil
-}
-
-type Thought struct {
-	Thought string
-	ThoughtType string
-	TimePosted time.Time
 }
 
 func (d *DB) GetRows() ([]Thought, error) {
